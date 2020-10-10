@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LibraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="author">
+          <Key>
+            <PropertyRef Name="author_id" />
+          </Key>
+          <Property Name="author_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="book">
+          <Key>
+            <PropertyRef Name="book_id" />
+          </Key>
+          <Property Name="book_id" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="book_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="edition" Type="decimal" Precision="4" Scale="1" Nullable="false" />
+          <Property Name="year_published" Type="smallint" Nullable="false" />
+          <Property Name="publisher_name" Type="nvarchar" MaxLength="60" />
+          <Property Name="genre_name" Type="nvarchar" MaxLength="60" />
+          <Property Name="cover_photo_path" Type="nvarchar" MaxLength="60" />
+          <Property Name="rating" Type="decimal" Precision="2" Scale="1" />
+          <Property Name="summary" Type="nvarchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="bookauthor">
+          <Key>
+            <PropertyRef Name="book_author_id" />
+          </Key>
+          <Property Name="book_author_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="book_id" Type="nvarchar" MaxLength="13" />
+          <Property Name="author_id" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="genre">
+          <Key>
+            <PropertyRef Name="genre_name" />
+          </Key>
+          <Property Name="genre_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="genre_type" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="publisher">
+          <Key>
+            <PropertyRef Name="publisher_name" />
+          </Key>
+          <Property Name="publisher_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="wishlistitem">
+          <Key>
+            <PropertyRef Name="wish_list_item_id" />
+          </Key>
+          <Property Name="wish_list_item_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="book_id" Type="nvarchar" MaxLength="13" />
+          <Property Name="date_created" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__book__genre_name__3A02903A">
+          <End Role="genre" Type="Self.genre" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="book" Type="Self.book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre">
+              <PropertyRef Name="genre_name" />
+            </Principal>
+            <Dependent Role="book">
+              <PropertyRef Name="genre_name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__book__publisher___390E6C01">
+          <End Role="publisher" Type="Self.publisher" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="book" Type="Self.book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="publisher">
+              <PropertyRef Name="publisher_name" />
+            </Principal>
+            <Dependent Role="book">
+              <PropertyRef Name="publisher_name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bookautho__autho__475C8B58">
+          <End Role="author" Type="Self.author" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="bookauthor" Type="Self.bookauthor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="author">
+              <PropertyRef Name="author_id" />
+            </Principal>
+            <Dependent Role="bookauthor">
+              <PropertyRef Name="author_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bookautho__book___4668671F">
+          <End Role="book" Type="Self.book" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="bookauthor" Type="Self.bookauthor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="book">
+              <PropertyRef Name="book_id" />
+            </Principal>
+            <Dependent Role="bookauthor">
+              <PropertyRef Name="book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__wishlisti__book___3EC74557">
+          <End Role="book" Type="Self.book" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="wishlistitem" Type="Self.wishlistitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="book">
+              <PropertyRef Name="book_id" />
+            </Principal>
+            <Dependent Role="wishlistitem">
+              <PropertyRef Name="book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LibraryModelStoreContainer">
+          <EntitySet Name="author" EntityType="Self.author" Schema="library" store:Type="Tables" />
+          <EntitySet Name="book" EntityType="Self.book" Schema="library" store:Type="Tables" />
+          <EntitySet Name="bookauthor" EntityType="Self.bookauthor" Schema="library" store:Type="Tables" />
+          <EntitySet Name="genre" EntityType="Self.genre" Schema="library" store:Type="Tables" />
+          <EntitySet Name="publisher" EntityType="Self.publisher" Schema="library" store:Type="Tables" />
+          <EntitySet Name="wishlistitem" EntityType="Self.wishlistitem" Schema="library" store:Type="Tables" />
+          <AssociationSet Name="FK__book__genre_name__3A02903A" Association="Self.FK__book__genre_name__3A02903A">
+            <End Role="genre" EntitySet="genre" />
+            <End Role="book" EntitySet="book" />
+          </AssociationSet>
+          <AssociationSet Name="FK__book__publisher___390E6C01" Association="Self.FK__book__publisher___390E6C01">
+            <End Role="publisher" EntitySet="publisher" />
+            <End Role="book" EntitySet="book" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bookautho__autho__475C8B58" Association="Self.FK__bookautho__autho__475C8B58">
+            <End Role="author" EntitySet="author" />
+            <End Role="bookauthor" EntitySet="bookauthor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bookautho__book___4668671F" Association="Self.FK__bookautho__book___4668671F">
+            <End Role="book" EntitySet="book" />
+            <End Role="bookauthor" EntitySet="bookauthor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__wishlisti__book___3EC74557" Association="Self.FK__wishlisti__book___3EC74557">
+            <End Role="book" EntitySet="book" />
+            <End Role="wishlistitem" EntitySet="wishlistitem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="author">
+          <Key>
+            <PropertyRef Name="author_id" />
+          </Key>
+          <Property Name="author_id" Type="Guid" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="bookauthors" Relationship="Self.FK__bookautho__autho__30792600" FromRole="author" ToRole="bookauthor" />
+        </EntityType>
+        <EntityType Name="book">
+          <Key>
+            <PropertyRef Name="book_id" />
+          </Key>
+          <Property Name="book_id" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="book_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="edition" Type="Decimal" Precision="4" Scale="1" Nullable="false" />
+          <Property Name="year_published" Type="Int16" Nullable="false" />
+          <Property Name="publisher_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="genre_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="cover_photo_path" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="rating" Type="Decimal" Precision="2" Scale="1" />
+          <Property Name="summary" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="genre" Relationship="Self.FK__book__genre_name__24134F1B" FromRole="book" ToRole="genre" />
+          <NavigationProperty Name="publisher" Relationship="Self.FK__book__publisher___231F2AE2" FromRole="book" ToRole="publisher" />
+          <NavigationProperty Name="bookauthors" Relationship="Self.FK__bookautho__book___2F8501C7" FromRole="book" ToRole="bookauthor" />
+          <NavigationProperty Name="wishlistitems" Relationship="Self.FK__wishlisti__book___27E3DFFF" FromRole="book" ToRole="wishlistitem" />
+        </EntityType>
+        <EntityType Name="bookauthor">
+          <Key>
+            <PropertyRef Name="book_author_id" />
+          </Key>
+          <Property Name="book_author_id" Type="Guid" Nullable="false" />
+          <Property Name="book_id" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="author_id" Type="Guid" />
+          <NavigationProperty Name="author" Relationship="Self.FK__bookautho__autho__30792600" FromRole="bookauthor" ToRole="author" />
+          <NavigationProperty Name="book" Relationship="Self.FK__bookautho__book___2F8501C7" FromRole="bookauthor" ToRole="book" />
+        </EntityType>
+        <EntityType Name="genre">
+          <Key>
+            <PropertyRef Name="genre_name" />
+          </Key>
+          <Property Name="genre_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="genre_type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="books" Relationship="Self.FK__book__genre_name__24134F1B" FromRole="genre" ToRole="book" />
+        </EntityType>
+        <EntityType Name="publisher">
+          <Key>
+            <PropertyRef Name="publisher_name" />
+          </Key>
+          <Property Name="publisher_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="books" Relationship="Self.FK__book__publisher___231F2AE2" FromRole="publisher" ToRole="book" />
+        </EntityType>
+        <EntityType Name="wishlistitem">
+          <Key>
+            <PropertyRef Name="wish_list_item_id" />
+          </Key>
+          <Property Name="wish_list_item_id" Type="Guid" Nullable="false" />
+          <Property Name="user_id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="book_id" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="book" Relationship="Self.FK__wishlisti__book___27E3DFFF" FromRole="wishlistitem" ToRole="book" />
+          <Property Name="date_created" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK__bookautho__autho__30792600">
+          <End Role="author" Type="Self.author" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="bookauthor" Type="Self.bookauthor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="author">
+              <PropertyRef Name="author_id" />
+            </Principal>
+            <Dependent Role="bookauthor">
+              <PropertyRef Name="author_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__book__genre_name__24134F1B">
+          <End Role="genre" Type="Self.genre" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="book" Type="Self.book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genre">
+              <PropertyRef Name="genre_name" />
+            </Principal>
+            <Dependent Role="book">
+              <PropertyRef Name="genre_name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__book__publisher___231F2AE2">
+          <End Role="publisher" Type="Self.publisher" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="book" Type="Self.book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="publisher">
+              <PropertyRef Name="publisher_name" />
+            </Principal>
+            <Dependent Role="book">
+              <PropertyRef Name="publisher_name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__bookautho__book___2F8501C7">
+          <End Role="book" Type="Self.book" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="bookauthor" Type="Self.bookauthor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="book">
+              <PropertyRef Name="book_id" />
+            </Principal>
+            <Dependent Role="bookauthor">
+              <PropertyRef Name="book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__wishlisti__book___27E3DFFF">
+          <End Role="book" Type="Self.book" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="wishlistitem" Type="Self.wishlistitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="book">
+              <PropertyRef Name="book_id" />
+            </Principal>
+            <Dependent Role="wishlistitem">
+              <PropertyRef Name="book_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LibraryContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="authors" EntityType="Self.author" />
+          <EntitySet Name="books" EntityType="Self.book" />
+          <EntitySet Name="bookauthors" EntityType="Self.bookauthor" />
+          <EntitySet Name="genres" EntityType="Self.genre" />
+          <EntitySet Name="publishers" EntityType="Self.publisher" />
+          <EntitySet Name="wishlistitems" EntityType="Self.wishlistitem" />
+          <AssociationSet Name="FK__bookautho__autho__30792600" Association="Self.FK__bookautho__autho__30792600">
+            <End Role="author" EntitySet="authors" />
+            <End Role="bookauthor" EntitySet="bookauthors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__book__genre_name__24134F1B" Association="Self.FK__book__genre_name__24134F1B">
+            <End Role="genre" EntitySet="genres" />
+            <End Role="book" EntitySet="books" />
+          </AssociationSet>
+          <AssociationSet Name="FK__book__publisher___231F2AE2" Association="Self.FK__book__publisher___231F2AE2">
+            <End Role="publisher" EntitySet="publishers" />
+            <End Role="book" EntitySet="books" />
+          </AssociationSet>
+          <AssociationSet Name="FK__bookautho__book___2F8501C7" Association="Self.FK__bookautho__book___2F8501C7">
+            <End Role="book" EntitySet="books" />
+            <End Role="bookauthor" EntitySet="bookauthors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__wishlisti__book___27E3DFFF" Association="Self.FK__wishlisti__book___27E3DFFF">
+            <End Role="book" EntitySet="books" />
+            <End Role="wishlistitem" EntitySet="wishlistitems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LibraryModelStoreContainer" CdmEntityContainer="LibraryContext">
+          <EntitySetMapping Name="authors">
+            <EntityTypeMapping TypeName="LibraryModel.author">
+              <MappingFragment StoreEntitySet="author">
+                <ScalarProperty Name="author_id" ColumnName="author_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="books">
+            <EntityTypeMapping TypeName="LibraryModel.book">
+              <MappingFragment StoreEntitySet="book">
+                <ScalarProperty Name="book_id" ColumnName="book_id" />
+                <ScalarProperty Name="book_name" ColumnName="book_name" />
+                <ScalarProperty Name="edition" ColumnName="edition" />
+                <ScalarProperty Name="year_published" ColumnName="year_published" />
+                <ScalarProperty Name="publisher_name" ColumnName="publisher_name" />
+                <ScalarProperty Name="genre_name" ColumnName="genre_name" />
+                <ScalarProperty Name="cover_photo_path" ColumnName="cover_photo_path" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bookauthors">
+            <EntityTypeMapping TypeName="LibraryModel.bookauthor">
+              <MappingFragment StoreEntitySet="bookauthor">
+                <ScalarProperty Name="book_author_id" ColumnName="book_author_id" />
+                <ScalarProperty Name="book_id" ColumnName="book_id" />
+                <ScalarProperty Name="author_id" ColumnName="author_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="genres">
+            <EntityTypeMapping TypeName="LibraryModel.genre">
+              <MappingFragment StoreEntitySet="genre">
+                <ScalarProperty Name="genre_name" ColumnName="genre_name" />
+                <ScalarProperty Name="genre_type" ColumnName="genre_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="publishers">
+            <EntityTypeMapping TypeName="LibraryModel.publisher">
+              <MappingFragment StoreEntitySet="publisher">
+                <ScalarProperty Name="publisher_name" ColumnName="publisher_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="wishlistitems">
+            <EntityTypeMapping TypeName="LibraryModel.wishlistitem">
+              <MappingFragment StoreEntitySet="wishlistitem">
+                <ScalarProperty Name="date_created" ColumnName="date_created" />
+                <ScalarProperty Name="wish_list_item_id" ColumnName="wish_list_item_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="book_id" ColumnName="book_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

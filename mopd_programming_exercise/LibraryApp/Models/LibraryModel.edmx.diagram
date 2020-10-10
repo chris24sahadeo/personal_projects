@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="974cbdeb38bc4f2ea7cc70fd6b169608" Name="Diagram1">
+        <EntityTypeShape EntityType="LibraryModel.author" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryModel.book" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryModel.bookauthor" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryModel.genre" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryModel.publisher" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryModel.wishlistitem" Width="1.5" PointX="5.25" PointY="6.25" IsExpanded="true" />
+        <AssociationConnector Association="LibraryModel.FK__bookautho__autho__30792600" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryModel.FK__book__genre_name__24134F1B" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryModel.FK__book__publisher___231F2AE2" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryModel.FK__bookautho__book___2F8501C7" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryModel.FK__wishlisti__book___27E3DFFF" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

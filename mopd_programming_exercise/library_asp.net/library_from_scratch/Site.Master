@@ -1,0 +1,92 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="library_from_scratch.library" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+    <title><%: Page.Title %> - Chris' Library</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+
+<body>
+    <form id="form1" runat="server">  
+
+        <%--<div id="menu">
+            <asp:Menu ID="mainMenu" runat="server" Orientation="Horizontal">
+                <Items>
+                    <asp:MenuItem Text="Home" Value="Home" NavigateUrl="~/Default.aspx" />
+                    <asp:MenuItem Text="Browse" Value="Browse" NavigateUrl="~/Browse.aspx"></asp:MenuItem> 
+                    <asp:MenuItem Text="About Us" Value="About Us">
+                        <asp:MenuItem Text="Mission and Vision" Value="Mission and Vision" NavigateUrl="~/MissionVision.aspx" />
+                        <asp:MenuItem Text="Staff" Value="Staff" NavigateUrl="~/Staff.aspx" />
+                    </asp:MenuItem>
+                    <asp:MenuItem Text="Contact" Value="Contact" NavigateUrl="~/Contact.aspx" />
+                    <asp:MenuItem Text="Help" Value="Help" NavigateUrl="~/Help.aspx" />
+                    <asp:MenuItem Text="Login/Sign Up" Value="Login/Sign Up" NavigateUrl="~/Login.aspx" />
+                    <asp:MenuItem Text="My Account" Value="Login/Sign Up" NavigateUrl="~/Login.aspx" />
+                </Items>
+            </asp:Menu>
+        </div>--%>
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" runat="server" href="~/">Chris' Library</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a runat="server" href="~/">Home</a></li>
+                        <li><a runat="server" href="~/About">About</a></li>
+                        <li><a runat="server" href="~/Contact">Contact</a></li>
+                    </ul>
+
+                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                        <AnonymousTemplate>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a runat="server" href="~/Account/Register">Register</a></li>
+                                <li><a runat="server" href="~/Account/Login">Log in</a></li>
+                            </ul>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%:  /* Context.User.Identity.GetUserName() */ HttpContext.Current.User.Identity.Name %> !</a></li>
+                                <li>
+                                    <%--<asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />--%>
+                                </li>
+                            </ul>
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="TitleContent" style="text-align: center">
+            <a runat="server" href="~/">
+                <asp:Image  ID="Image1" runat="server" ImageUrl="~/Images/logo.jpg" BorderStyle="None" />
+            </a>  
+            <br />  
+        </div>
+
+    <div id="con">  
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">  
+          
+        </asp:ContentPlaceHolder>  
+    </div>  
+
+    <footer>
+        <p>&copy; <%: DateTime.Now.Year %> - chrislibrary.com</p>
+    </footer>
+    </form>
+</body>
+
+</html>

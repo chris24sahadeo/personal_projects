@@ -11,6 +11,6 @@ echo "Removing .git from cloned repo..."
 rm -rf $DIR/.git
 
 echo "Adding to new repo..."
-git add $DIR && git commit --amend --no-edit && git push origin main
+git add $DIR && git commit -m "Add to main repo." && git push origin main
 
 set +x
