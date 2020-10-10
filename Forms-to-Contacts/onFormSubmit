@@ -1,0 +1,23 @@
+function onFormSubmit(e) {
+  
+//  fetching item responses from form
+  var response = e.response;
+  var itemResponses = response.getItemResponses()  
+  
+//  parsing item responses
+  var email = response.getRespondentEmail();
+  var firstName = itemResponses[0].getResponse();
+  var lastName = itemResponses[1].getResponse();
+  var phoneNumber = itemResponses[2].getResponse();
+  
+//  TODO: course checkbox groupings
+//  var courses = itemResponses[3].getChoices();
+//  
+//  var p1 = "18-19 S1 sGP1";
+//  var p2 = "18-19 S1 sGP2";
+//  var ds = "18-19 S1 sGDS";  
+
+  var contact = ContactsApp.createContact(firstName, lastName, email);
+  contact.addPhone(ContactsApp.Field.HOME_PHONE, phoneNumber)  
+  
+}
