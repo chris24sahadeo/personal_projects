@@ -1,5 +1,8 @@
 # Quake 3 Arena Setup Guide  
 
+## Ubuntu 18.04 Installation Guide
+Original Link: https://askubuntu.com/questions/948106/how-to-install-quake-3
+
 ## Unlocking All Levels
 Player progress is tracked in the `../baseq3/q3config.cfg` file in the string  
 ```
